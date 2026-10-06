@@ -51,11 +51,21 @@
   --font-urdu: 'Noto Nastaliq Urdu', 'Amiri', 'Jameel Noori Nastaleeq', 'Urdu Typesetting', serif;
 }
 
-/* Reset & Box Sizing */
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+/* Urdu font as a Tailwind utility: lets us write className="font-urdu" */
+@theme {
+  --font-urdu: 'Noto Nastaliq Urdu', 'Amiri', serif;
+}
+
+/* Reset & Box Sizing
+   FIX: this reset is now inside @layer base. Before, it sat outside any layer,
+   so it beat Tailwind's classes and every p-6, mt-6, mb-8 ... was cancelled
+   (margin: 0 and padding: 0 always won). That is why the design was broken. */
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 }
 
 html {
@@ -81,12 +91,15 @@ button, input, select, textarea {
   font-family: inherit;
 }
 
-a {
-  color: var(--primary);
-  text-decoration: none;
-  transition: var(--transition);
-}
+/* Also in @layer base so Tailwind colour classes (e.g. text-white) can override it */
+@layer base {
+  a {
+    color: var(--primary);
+    text-decoration: none;
+    transition: var(--transition);
+  }
 
-a:hover {
-  color: var(--primary-hover);
+  a:hover {
+    color: var(--primary-hover);
+  }
 }
