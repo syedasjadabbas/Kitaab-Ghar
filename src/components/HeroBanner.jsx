@@ -2,14 +2,25 @@
 // Features an atmospheric library background image, dark ambient gradient overlay,
 // authentic Urdu calligraphy accent, dual CTAs, and interactive glass feature pills.
 
+import { useStore } from '../context/StoreContext';
+
 const highlights = [
-  { icon: '🎧', title: 'Audio Books', desc: 'Narrated audiobooks' },
-  { icon: '🔤', title: 'Unicode Urdu', desc: 'Searchable Nastaliq text' },
-  { icon: '📄', title: 'PDF Editions', desc: 'Original scans & copies' },
-  { icon: '⚡', title: 'Instant Access', desc: '100% free in your browser' }
+  { icon: '🎧', title: 'Audio Books', desc: 'Narrated audiobooks', filter: 'AUDIO' },
+  { icon: '🔤', title: 'Unicode Urdu', desc: 'Searchable Nastaliq text', filter: 'UNICODE' },
+  { icon: '📄', title: 'PDF Editions', desc: 'Original scans & copies', filter: 'PDF' },
+  { icon: '⚡', title: 'Instant Access', desc: '100% free in your browser', filter: 'ALL' }
 ];
 
 export default function HeroBanner() {
+  const { setFilterAndScroll } = useStore();
+
+  function scrollToSection(id) {
+    const elem = document.getElementById(id);
+    if (elem) {
+      elem.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
   return (
     <section
       id="home"
@@ -71,9 +82,10 @@ export default function HeroBanner() {
 
         {/* Interactive Action Buttons */}
         <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-          <a
-            href="#library"
-            className="group inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 px-6 py-3.5 text-sm font-bold text-slate-950 shadow-lg shadow-amber-500/25 transition-all duration-200 hover:from-amber-300 hover:to-amber-400 hover:shadow-amber-500/40 hover:scale-[1.02] active:scale-[0.98]"
+          <button
+            type="button"
+            onClick={() => scrollToSection('library')}
+            className="group cursor-pointer inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 px-6 py-3.5 text-sm font-bold text-slate-950 shadow-lg shadow-amber-500/25 transition-all duration-200 hover:from-amber-300 hover:to-amber-400 hover:shadow-amber-500/40 hover:scale-[1.02] active:scale-[0.98]"
           >
             <span>📖 Explore Library</span>
             <svg
@@ -85,31 +97,36 @@ export default function HeroBanner() {
             >
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
             </svg>
-          </a>
+          </button>
 
-          <a
-            href="#featured"
-            className="inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-6 py-3.5 text-sm font-semibold text-white backdrop-blur-md transition-all duration-200 hover:bg-white/15 hover:border-white/35 hover:scale-[1.02] active:scale-[0.98]"
+          <button
+            type="button"
+            onClick={() => scrollToSection('featured')}
+            className="cursor-pointer inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-6 py-3.5 text-sm font-semibold text-white backdrop-blur-md transition-all duration-200 hover:bg-white/15 hover:border-white/35 hover:scale-[1.02] active:scale-[0.98]"
           >
             <span>⭐ Book of the Week</span>
-          </a>
+          </button>
         </div>
 
-        {/* Highlight Feature Badges */}
-        <ul className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
+        {/* Highlight Feature Badges - Clickable to filter collection */}
+        <div className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
           {highlights.map((item) => (
-            <li
+            <button
               key={item.title}
-              className="group flex flex-col items-center rounded-2xl border border-white/10 bg-white/[0.06] p-4 backdrop-blur-md transition-all duration-200 hover:border-amber-400/30 hover:bg-white/10 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/30"
+              type="button"
+              onClick={() => setFilterAndScroll(item.filter)}
+              className="group cursor-pointer flex flex-col items-center rounded-2xl border border-white/10 bg-white/[0.06] p-4 backdrop-blur-md transition-all duration-200 hover:border-amber-400/40 hover:bg-white/15 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/30 active:scale-95 text-left w-full"
             >
               <span className="text-2xl transition-transform duration-200 group-hover:scale-110" aria-hidden="true">
                 {item.icon}
               </span>
-              <span className="mt-2 text-sm font-semibold text-white">{item.title}</span>
+              <span className="mt-2 text-sm font-semibold text-white group-hover:text-amber-200 transition">
+                {item.title}
+              </span>
               <span className="text-xs text-slate-400">{item.desc}</span>
-            </li>
+            </button>
           ))}
-        </ul>
+        </div>
       </div>
 
       {/* Subtle bottom fade transition towards the page content */}
@@ -120,4 +137,5 @@ export default function HeroBanner() {
     </section>
   );
 }
+
 
