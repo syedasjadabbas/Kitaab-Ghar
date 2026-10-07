@@ -1,143 +1,317 @@
-# KitabGhar Digital — React Bookstore (Student & Teacher Guide)
+<div align="center">
 
-Welcome to **KitabGhar Digital**! This application is designed for **Web Technologies (FA26)** to demonstrate how a modern web application bridges **Semantic HTML5/CSS3** (Week 1) with **Component-Driven React and Live REST APIs** (Week 2).
+# 📚 KitabGhar Digital (کتاب گھر)
+### *A Next-Generation Digital, Audio & Unicode Urdu Bookstore*
 
----
+[![React 19](https://img.shields.io/badge/React-19.2-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
+[![Vite](https://img.shields.io/badge/Vite-8.3-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-v4.0-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
+[![REST API](https://img.shields.io/badge/REST_API-Live_Integrated-10B981?style=for-the-badge&logo=fastapi&logoColor=white)](http://159.65.157.115/)
+[![License](https://img.shields.io/badge/License-MIT-amber?style=for-the-badge)](LICENSE)
 
-## 🎯 Lecture Topic: Why Clear HTML Tags are Used in JSX
+<br />
 
-> [!IMPORTANT]
-> ### 👨‍🏫 Teacher's Guide: Explaining "HTML Tags vs. Custom JSX Tags" to Students
->
-> When students look at `App.jsx` and the component files, they often wonder:
-> **"Why do some tags look like `<BookCard />` and `<Header />`, while inside them we write `<article>`, `<header>`, `<button>`, and `<p>`?"**
->
-> Here are the 3 core principles to explain in class:
+![KitabGhar Digital Showcase](docs/banner.jpg)
 
-### 1. Capitalized Names vs. Lowercase Names (React Convention)
-In React JSX:
-- **Lowercase tags** (e.g. `<header>`, `<main>`, `<section>`, `<article>`, `<button>`, `<input>`, `<h1>`, `<p>`, `<span>`) represent **Native HTML elements**.
-  - When the compiler (Vite / Babel / SWC) sees `<article>`, it converts it to:
-    ```javascript
-    React.createElement('article', null, ...) // Creates a real DOM element
-    ```
-- **Uppercase (Capitalized) tags** (e.g. `<Header />`, `<BookCard />`, `<Controls />`, `<BookModal />`, `<HeroBanner />`) represent **Custom React Components**.
-  - When the compiler sees `<BookCard />`, it converts it to a function call:
-    ```javascript
-    React.createElement(BookCard, { book: bookData }) // Calls your component function
-    ```
-- If you accidentally write `<bookCard />` (lowercase), React will search for an HTML element called `<bookCard>`, which does not exist in standard HTML!
+<br />
 
-### 2. Semantic HTML vs. "Div Soup"
-- Many beginners write React code using only `<div>` tags for everything:
-  ```jsx
-  /* ❌ Bad Practice: "Div Soup" - No semantic meaning */
-  <div className="header">
-    <div className="card">
-      <div className="btn" onClick={...}>Click Me</div>
-    </div>
-  </div>
-  ```
-- In our project, we use **Clear, Semantic HTML5 Tags**:
-  ```jsx
-  /* ✅ Clean Professional Practice: Semantic HTML */
-  <header className="site-header">
-    <article className="book-card">
-      <button type="button" className="btn-add" onClick={...}>Add</button>
-    </article>
-  </header>
-  ```
-- **Why this matters for students**:
-  1. **Accessibility (a11y)**: Screen readers for visually impaired users rely on `<header>`, `<nav>`, `<article>`, and `<button>` to navigate.
-  2. **Keyboard Navigation**: Native `<button>` elements automatically respond to `Enter` and `Space` keys and support the `disabled` attribute. A `<div>` does not!
-  3. **SEO & Browser Performance**: Search engines index pages much higher when semantic landmarks are used.
-  4. **Connecting Week 1 to Week 2**: Students don't discard HTML when learning React; React is simply JavaScript returning HTML!
+**KitabGhar Digital** is an elegant, full-featured digital bookstore web application designed to showcase authentic Urdu, classical literature, and multilingual publications. Built with **React 19**, **Vite 8**, and **Tailwind CSS v4**, it integrates an in-browser **HTML5 Audio Player**, searchable **Unicode Nastaleeq Reader**, **PDF Viewer**, dynamic **Shopping Cart**, and live **REST API** streaming.
 
-### 3. Component Composition: Outer Layer vs. Inner Layer
-- In **`App.jsx`** (Outer Layout), students see clean high-level building blocks:
-  ```jsx
-  <Header />
-  <HeroBanner />
-  <Controls />
-  <BookCard />
-  <CartDrawer />
-  ```
-- Inside **`BookCard.jsx`** (Inner Implementation), students find the actual HTML elements:
-  ```jsx
-  <article className="book-card">
-    <div className="card-cover">...</div>
-    <div className="card-body">
-      <h3 className="book-title">{book.title}</h3>
-      <p className="book-author">{book.author}</p>
-      <button className="btn-add">Add to Cart</button>
-    </div>
-  </article>
-  ```
-This teaches students **Separation of Concerns**: `App.jsx` manages state and layout, while individual components define the exact HTML markup and local behavior.
+[Explore Features](#-key-features) • [Architecture](#-system-architecture) • [Live API Endpoints](#-live-rest-api-endpoints) • [Getting Started](#-getting-started) • [Student & Teacher Guide](#-pedagogical-guide-semantic-html--jsx)
+
+</div>
 
 ---
 
-## 🌐 Live REST API Endpoints Integrated
+## 🌟 Key Features
 
-The application integrates with the live server at `http://159.65.157.115`:
-
-| Resource | HTTP Endpoint | Description |
-| :--- | :--- | :--- |
-| **PDF Books** | `GET /api/books?bookType=PDF&page=1` | Returns official downloadable PDF books |
-| **Unicode Books** | `GET /api/books?bookType=UNICODE&page=1` | Returns searchable UTF-8 / Nastaleeq Urdu literature |
-| **Audiobooks** | `GET /api/audiobooks?page=1` | Returns studio-narrated audiobooks with MP3 stream URLs |
-| **Single Book Details** | `GET /api/books/:id` | Returns complete details and chapter metadata for a book |
-| **Cover Photo** | `GET http://159.65.157.115/{coverPhotoUri}` | Cover image URL (encoded for Urdu text & spaces) |
-| **Book PDF File** | `GET http://159.65.157.115/{fileUri}` | PDF document for viewing or downloading |
-| **Audio MP3 File** | `GET http://159.65.157.115/{audioFilesUri[0]}` | Streamable MP3 audio track played directly in browser |
+<table>
+  <tr>
+    <td width="50%">
+      <h3>🎧 Studio Audiobook Streaming</h3>
+      <p>Custom in-browser HTML5 audio player modal with dynamic track playback, audio scrubber, volume adjustment, and cover art display for narrated classics.</p>
+    </td>
+    <td width="50%">
+      <h3>📖 Unicode Nastaleeq Reader</h3>
+      <p>Clean typography reader with Amiri and Noto Nastaliq Urdu fonts. Features real-time font scaling, line-height controls, chapter browsing, and text copying.</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%">
+      <h3>📄 Instant PDF Document Viewer</h3>
+      <p>Direct in-modal PDF preview and official high-resolution document download links with fallback placeholders for offline reading.</p>
+    </td>
+    <td width="50%">
+      <h3>🛒 Interactive Slide-Over Cart</h3>
+      <p>Persistent global cart state powered by React Context. Supports item addition, real-time quantity controls, instant item removal, and auto-computed subtotals.</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%">
+      <h3>🔍 Real-Time Search & Category Filters</h3>
+      <p>Instant title and author searching combined with multi-category filters (PDF Books, Unicode Literature, Audiobooks, All).</p>
+    </td>
+    <td width="50%">
+      <h3>🌐 Live REST API & Cloud Storage</h3>
+      <p>Full integration with remote Ubuntu/Nginx cloud server at <code>159.65.157.115</code> for dynamic catalog retrieval and media streaming.</p>
+    </td>
+  </tr>
+</table>
 
 ---
 
-## 📁 Project Architecture & Component Tree
+## 🏗️ System Architecture
 
-```text
-myreactjsapp/
-├── index.html              # HTML shell & Google Fonts (Amiri, Noto Nastaliq Urdu, Inter)
-├── package.json            # Dependencies & npm scripts
-└── src/
-    ├── main.jsx            # React root entry point (createRoot)
-    ├── App.jsx             # Main Application Component (holds state & API loader)
-    ├── App.css             # Component styling, animations & theme colors
-    ├── index.css           # Global CSS variables & typography
-    ├── constants.js        # API endpoints and safe URL builder helper (getAssetUrl)
-    ├── services/
-    │   └── bookService.js  # Fetch functions & API normalization layer
-    ├── data/
-    │   └── booksData.js    # Curated offline dataset (Audio, Unicode, Web, Prog, Science)
-    └── components/
-        ├── Header.jsx       # Top navbar with live API connection indicator & Cart widget
-        ├── HeroBanner.jsx   # Header banner with interactive category quick pills
-        ├── Controls.jsx     # Search input bar + Category filter buttons
-        ├── BookCard.jsx     # Book card with API image covers, PDF links, and gradients
-        ├── BookModal.jsx    # Quick preview modal with real HTML5 Audio Player & PDF download
-        ├── CartDrawer.jsx   # Slide-over shopping cart drawer with quantity & total calculation
-        ├── FeaturesGrid.jsx # 4-column store highlights grid
-        ├── SiteFooter.jsx   # Footer with category navigation links
-        └── Toast.jsx        # Floating feedback alert notification
+KitabGhar follows a unidirectional data flow powered by React 19's Context API and modular component architecture.
+
+```mermaid
+graph TD
+    subgraph UI_Layer ["🎨 Client UI Layer (React 19 + Tailwind v4)"]
+        Header["Header Component\n(Nav + Cart Counter)"]
+        Hero["HeroBanner Component\n(Search + Category Pills)"]
+        Catalog["BookCard Catalog\n(Filter, Grid, Modals Trigger)"]
+        Featured["BookCardClone\n(Curated Highlights)"]
+        FeaturesGrid["FeaturesGrid\n(Value Props)"]
+        Footer["SiteFooter\n(Links & Metadata)"]
+    end
+
+    subgraph State_Management ["🧠 Global State Layer (StoreContext)"]
+        SC["StoreProvider Context"]
+        CartState["Cart Items & Quantities"]
+        ModalState["Active Modal: Audio | Unicode | PDF"]
+        FilterState["Search Query & Category Filters"]
+        ToastState["Interactive Notification Queue"]
+    end
+
+    subgraph Interactive_Overlays ["🪟 Interactive Overlays & Modals"]
+        AudioModal["AudioPlayerModal\n(HTML5 Audio Engine)"]
+        UnicodeModal["UnicodeReaderModal\n(Nastaleeq Reader)"]
+        PdfModal["PdfViewerModal\n(Document Preview)"]
+        CartDrawer["CartDrawer\n(Slide-Over Shopping Bag)"]
+        Toast["Toast Notification\n(Animated Feedback)"]
+    end
+
+    subgraph Data_Sources ["☁️ Data & Cloud Media"]
+        LocalData["Local Curated Dataset\n(booksData.js)"]
+        RemoteAPI["Live REST API\n(http://159.65.157.115)"]
+        MediaCDN["Media Storage\n(/books/ cover, audio, pdf)"]
+    end
+
+    UI_Layer --> SC
+    SC --> CartState & ModalState & FilterState & ToastState
+    ModalState --> Interactive_Overlays
+    Catalog --> LocalData
+    Catalog -.-> RemoteAPI
+    Interactive_Overlays -.-> MediaCDN
 ```
 
 ---
 
-## 🚀 Running the Project
+## 🗂️ Component Hierarchy & Flow
 
-1. Navigate to the project directory:
-   ```bash
-   cd "2-WeekTwo/myreactjsapp"
-   ```
+```mermaid
+flowchart LR
+    App["App.jsx (Root)"]
+    App --> SP["StoreProvider (context/StoreContext.jsx)"]
+    
+    SP --> H["Header.jsx"]
+    SP --> HB["HeroBanner.jsx"]
+    SP --> BC["BookCard.jsx (Main Library)"]
+    SP --> BCC["BookCardClone.jsx (Featured)"]
+    SP --> FG["FeaturesGrid.jsx"]
+    SP --> SF["SiteFooter.jsx"]
+    
+    SP --> APM["AudioPlayerModal.jsx"]
+    SP --> URM["UnicodeReaderModal.jsx"]
+    SP --> PVM["PdfViewerModal.jsx"]
+    SP --> CD["CartDrawer.jsx"]
+    SP --> T["Toast.jsx"]
+```
 
-2. Install dependencies (if not already installed):
-   ```bash
-   npm install
-   ```
+---
 
-3. Start the Vite development server:
-   ```bash
-   npm run dev
-   ```
+## 🌐 Live REST API Endpoints
 
-4. Open your browser at `http://localhost:5173`.
+The client seamlessly interacts with the production cloud API hosted at `http://159.65.157.115`:
+
+| Resource | HTTP Method | Endpoint | Description |
+| :--- | :---: | :--- | :--- |
+| **PDF Books** | `GET` | `/api/books?bookType=PDF&page=1` | Official downloadable digitized PDF literature |
+| **Unicode Books** | `GET` | `/api/books?bookType=UNICODE&page=1` | Searchable UTF-8 Nastaleeq text books |
+| **Audiobooks** | `GET` | `/api/audiobooks?page=1` | Studio-narrated recordings with streamable MP3 URLs |
+| **Single Book** | `GET` | `/api/books/:id` | Full metadata, synopsis, and chapter breakdown |
+| **Cover Artwork** | `GET` | `/{coverPhotoUri}` | High-res cover image (URL-encoded for Urdu characters) |
+| **PDF Document** | `GET` | `/{fileUri}` | Raw PDF file for in-app viewing or direct download |
+| **Audio Track** | `GET` | `/{audioFilesUri[0]}` | Direct MP3 audio stream for HTML5 audio player |
+
+> [!NOTE]
+> All media endpoints handle Urdu Unicode paths gracefully using safe URL encoding strategies (`encodeURI` / `encodeURIComponent`).
+
+---
+
+## 💻 Tech Stack & Dependencies
+
+| Layer | Technology | Version | Purpose |
+| :--- | :--- | :--- | :--- |
+| **Core Framework** | [React](https://react.dev/) | `^19.2.8` | Component-driven declarative UI |
+| **Build Tool** | [Vite](https://vitejs.dev/) | `^8.3.0` | Ultra-fast HMR and ESM bundling |
+| **Styling** | [Tailwind CSS](https://tailwindcss.com/) | `^4.3.3` | Modern utility-first styling engine |
+| **Compiler Plugin** | [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react) | `^6.1.1` | Fast Refresh with SWC/Babel |
+| **CSS Integration** | [@tailwindcss/vite](https://tailwindcss.com/docs) | `^4.3.3` | Native Vite integration for Tailwind v4 |
+| **Linter** | [Oxlint](https://oxc.rs/) | `^1.81.0` | Next-generation Rust-powered linter |
+| **Typography** | Google Fonts | Web | *Amiri*, *Noto Nastaliq Urdu*, *Inter* |
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+- **Node.js**: v18.0.0 or higher (Tested on Node v20.x and v24.x)
+- **npm** or **yarn**
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/syedasjadabbas/Kitaab-Ghar.git
+cd Kitaab-Ghar
+```
+
+### 2. Install Dependencies
+```bash
+npm install
+```
+
+### 3. Launch Development Server
+```bash
+npm run dev
+```
+
+The Vite dev server will start instantly:
+```text
+  VITE v8.3.3  ready in 410 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+```
+
+### 4. Build for Production
+To create an optimized production bundle:
+```bash
+npm run build
+```
+
+Preview the production build locally:
+```bash
+npm run preview
+```
+
+> [!TIP]
+> **Windows Path Compatibility**: On Windows environments where project folder paths contain special characters (such as spaces or ampersands `&`), the `package.json` scripts are pre-configured to execute Node directly against the Vite entry point, preventing shell delimiter collisions.
+
+---
+
+## 📁 Repository Structure
+
+```text
+Kitaab-Ghar/
+├── docs/
+│   └── banner.jpg               # Professional showcase banner
+├── public/
+│   ├── favicon.svg              # Bookstore favicon icon
+│   ├── hero-bg.jpg              # Atmospheric library background
+│   ├── icons.svg                # Scalable vector sprites
+│   └── book-placeholder.svg     # Fallback book cover artwork
+├── src/
+│   ├── assets/                  # Brand graphics & SVGs
+│   ├── components/              # Reusable React components
+│   │   ├── Header.jsx           # Sticky glassmorphic navbar & cart counter
+│   │   ├── HeroBanner.jsx       # Hero banner with Urdu typography & filter pills
+│   │   ├── BookCard.jsx         # Primary catalog grid, filter engine & modals
+│   │   ├── BookCardClone.jsx    # Featured books showcase section
+│   │   ├── FeaturesGrid.jsx     # Four-column store value highlights
+│   │   ├── SiteFooter.jsx       # Semantic footer with navigation links
+│   │   ├── AudioPlayerModal.jsx # HTML5 Audiobook player with audio scrubber
+│   │   ├── UnicodeReaderModal.jsx# Nastaleeq reader with font-size controls
+│   │   ├── PdfViewerModal.jsx   # In-app PDF viewer & downloader
+│   │   ├── CartDrawer.jsx       # Slide-over cart with quantity adjuster
+│   │   └── Toast.jsx            # Animated feedback alerts
+│   ├── context/
+│   │   └── StoreContext.jsx     # Global state provider (Cart, Modals, Filters)
+│   ├── data/
+│   │   └── booksData.js         # Curated literature dataset & remote base URL
+│   ├── App.jsx                  # Main application composition root
+│   ├── App.css                  # Custom animations, card gradients & typography
+│   ├── index.css                # Tailwind CSS v4 directives & font imports
+│   └── main.jsx                 # React DOM createRoot entrypoint
+├── package.json                 # Project configuration & scripts
+├── vite.config.js               # Vite 8 & Tailwind v4 plugin setup
+└── README.md                    # Project documentation
+```
+
+---
+
+## 🎓 Pedagogical Guide: Semantic HTML & JSX
+
+> [!IMPORTANT]
+> ### 👨‍🏫 Teacher's Guide: Explaining "Native HTML vs. Custom JSX Components"
+> 
+> When learning React, students frequently ask:
+> **"Why do some tags look like `<BookCard />` and `<Header />`, while inside them we write `<article>`, `<header>`, `<button>`, and `<p>`?"**
+
+### 1. Capitalized vs. Lowercase Tag Names
+In React JSX:
+- **Lowercase tags** (`<header>`, `<main>`, `<article>`, `<button>`, `<p>`) represent **Native HTML elements**.
+  ```javascript
+  // Compiled to a real DOM element
+  React.createElement('article', { className: 'book-card' });
+  ```
+- **Uppercase (Capitalized) tags** (`<Header />`, `<BookCard />`, `<CartDrawer />`) represent **Custom React Components**.
+  ```javascript
+  // Compiled to a custom component function call
+  React.createElement(BookCard, { book: bookData });
+  ```
+
+### 2. Semantic HTML vs. "Div Soup"
+- ❌ **Anti-Pattern (Div Soup)**: Lacks semantic hierarchy, impairs accessibility, and weakens SEO:
+  ```jsx
+  <div className="header">
+    <div className="card">
+      <div className="btn" onClick={handleClick}>Read Book</div>
+    </div>
+  </div>
+  ```
+- ✅ **Clean Professional Practice (Semantic HTML)**:
+  ```jsx
+  <header className="site-header">
+    <article className="book-card">
+      <button type="button" className="btn-read" onClick={handleClick}>Read Book</button>
+    </article>
+  </header>
+  ```
+
+### 3. Key Benefits of Semantic Markup
+1. **Accessibility (a11y)**: Screen readers accurately announce navigational landmarks (`<header>`, `<nav>`, `<main>`).
+2. **Keyboard Navigation**: Native `<button>` elements inherently support keyboard events (`Enter`, `Space`) and disabled states.
+3. **SEO Performance**: Search spiders rank semantic outlines significantly higher than unindexed generic `<div>` tags.
+
+---
+
+## 🤝 Contributing
+
+Contributions, feature ideas, and pull requests are warmly welcomed!
+1. Fork the Project (`https://github.com/syedasjadabbas/Kitaab-Ghar/fork`)
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'feat: Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+---
+
+## 📄 License
+
+This project is open-source and distributed under the **MIT License**.
+
+---
+
+<div align="center">
+  <sub>Developed with ❤️ for Urdu literature preservation and modern web technology education.</sub>
+</div>
